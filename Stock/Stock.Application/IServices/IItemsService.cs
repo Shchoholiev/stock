@@ -1,4 +1,5 @@
-﻿using Stock.Application.Paging;
+﻿using Stock.Application.Descriptions;
+using Stock.Application.Paging;
 using Stock.Core.Entities;
 
 namespace Stock.Application.IServices
@@ -9,6 +10,6 @@ namespace Stock.Application.IServices
 
         Task ProcessIncomeInvoiceAsync(IEnumerable<Item> items);
 
-        Task ProcessSalesInvoiceAsync(IEnumerable<Item> items);
+        Task<OperationDetails> ProcessSalesInvoiceAsync(IEnumerable<Item> items);
     }
 }
