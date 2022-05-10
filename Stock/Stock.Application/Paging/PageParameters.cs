@@ -2,7 +2,7 @@
 {
     public class PageParameters
     {
-        public int PageSize { get; set; } = 12;
+        public int PageSize { get; set; } = 16;
 
         public int PageNumber { get; set; } = 1;
     }
