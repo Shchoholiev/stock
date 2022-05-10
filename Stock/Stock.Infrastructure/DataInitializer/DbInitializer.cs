@@ -5,10 +5,10 @@ namespace Stock.Infrastructure.DataInitializer
 {
     public static class DbInitializer
     {
-        public static async Task Initialize(ApplicationContext context)
+        public static void Initialize(ApplicationContext context)
         {
-            await context.Database.EnsureDeletedAsync();
-            await context.Database.EnsureCreatedAsync();
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
 
             var items = new List<Item>
             {
