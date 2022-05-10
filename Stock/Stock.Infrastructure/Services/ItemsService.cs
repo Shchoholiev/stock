@@ -28,6 +28,7 @@ namespace Stock.Infrastructure.Services
                 {
                     var dbItem = await this._itemsRepository.GetOneAsync(item.Id);
                     dbItem.Count += item.Count;
+                    dbItem.LastAppeal = DateTime.Now;
                     await this._itemsRepository.UpdateAsync(dbItem);
                 }
                 else
@@ -46,6 +47,7 @@ namespace Stock.Infrastructure.Services
                 dbItem.Count -= item.Count;
                 if (dbItem.Count > 0)
                 {
+                    dbItem.LastAppeal = DateTime.Now;
                     await this._itemsRepository.UpdateAsync(dbItem);
                 }
                 else
