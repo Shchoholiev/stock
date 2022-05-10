@@ -39,6 +39,7 @@ namespace Stock.UI
 
             InitializeComponent();
             new Action(async () => await this.SetPage(1))();
+            this.invoice.ItemsSource = this._invoiceItems;
         }
 
         private async Task SetPage(int pageNumber)
@@ -77,7 +78,27 @@ namespace Stock.UI
 
         private void AddToInvoice(object sender, RoutedEventArgs e)
         {
+            var itemId = Convert.ToInt32((sender as Button)?.Tag);
+            if (!this._invoiceItems.Any(i => i.Id == itemId))
+            {
+                var item = this._items.FirstOrDefault(i => i.Id == itemId);
+                item.Count = 0;
+                this._invoiceItems.Add(item);
+                this.RefreshInvoiceGrid();
+            }
+        }
 
+        private void RemoveFromInvoice(object sender, RoutedEventArgs e)
+        {
+            var itemId = Convert.ToInt32((sender as Button)?.Tag);
+            var item = this._invoiceItems.FirstOrDefault(i => i.Id == itemId);
+            this._invoiceItems.Remove(item);
+            this.RefreshInvoiceGrid();
+        }
+
+        private void RefreshInvoiceGrid()
+        {
+            this.invoice.Items.Refresh();
         }
     }
 }
