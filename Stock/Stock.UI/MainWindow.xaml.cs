@@ -82,8 +82,16 @@ namespace Stock.UI
             if (!this._invoiceItems.Any(i => i.Id == itemId))
             {
                 var item = this._items.FirstOrDefault(i => i.Id == itemId);
-                item.Count = 0;
-                this._invoiceItems.Add(item);
+                var invoiceItem = new Item
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    Price = item.Price,
+                    Unit = item.Unit,
+                    LastAppeal = item.LastAppeal,
+                    Count = 0,
+                };
+                this._invoiceItems.Add(invoiceItem);
                 this.RefreshInvoiceGrid();
             }
         }
@@ -96,9 +104,57 @@ namespace Stock.UI
             this.RefreshInvoiceGrid();
         }
 
+        private async void ProcessInvoice(object sender, RoutedEventArgs e)
+        {
+            if (this._invoiceItems.Count() < 1)
+            {
+                MessageBox.Show("Choose items!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            var invoiceType = (this.type.SelectedItem as ComboBoxItem)?.Content.ToString();
+            switch (invoiceType)
+            {
+                case "Income":
+                    await this._itemsService.ProcessIncomeInvoiceAsync(this._invoiceItems);
+                    this.ClearInvoice();
+                    await this.SetPage(this._items.PageNumber);
+                    break;
+
+                case "Sales":
+                    var result = await this._itemsService.ProcessSalesInvoiceAsync(this._invoiceItems);
+                    if (!result.Succeeded)
+                    {
+                        var message = "";
+                        foreach (var error in result.Messages)
+                        {
+                            message += error + "\n";
+                        }
+                        MessageBox.Show(message, "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    this.ClearInvoice();
+                    await this.SetPage(this._items.PageNumber);
+                    break;
+
+                default:
+                    MessageBox.Show("Choose invoice type!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
+                    break;
+            }
+        }
+
         private void RefreshInvoiceGrid()
         {
             this.invoice.Items.Refresh();
+        }
+
+        private void ClearInvoice()
+        {
+            this._invoiceItems.Clear();
+            this.RefreshInvoiceGrid();
+        }
+
+        private void ClearInvoice(object sender, RoutedEventArgs e)
+        {
+            this.ClearInvoice();
         }
     }
 }

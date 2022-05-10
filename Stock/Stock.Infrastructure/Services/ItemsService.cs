@@ -33,6 +33,7 @@ namespace Stock.Infrastructure.Services
                 }
                 else
                 {
+                    item.LastAppeal = DateTime.Now;
                     await this._itemsRepository.AddAsync(item);
                 }
             }
@@ -44,9 +45,16 @@ namespace Stock.Infrastructure.Services
             foreach (var item in items)
             {
                 var dbItem = await this._itemsRepository.GetOneAsync(item.Id);
-                dbItem.Count -= item.Count;
-                if (dbItem.Count > 0)
+                if (dbItem == null)
                 {
+                    details.AddError($"{item.Name} doesnt exist.");
+                    continue;
+                }
+
+                var count = dbItem.Count - item.Count;
+                if (count >= 0)
+                {
+                    dbItem.Count = count;
                     dbItem.LastAppeal = DateTime.Now;
                     await this._itemsRepository.UpdateAsync(dbItem);
                 }

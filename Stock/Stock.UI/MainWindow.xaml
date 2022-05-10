@@ -30,15 +30,15 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Height="23" HorizontalAlignment="Center" Name="btnFirst" VerticalAlignment="Bottom" Width="40" 
-            Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="0,0,250,30"/>
+            Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75" Margin="0,0,250,30" BorderBrush="{x:Null}"/>
         <Button Height="23"  Name="btnPrev" Width="40" Click="btnPrev_Click" 
-                Opacity="0.75" Content="&lt;" Margin="0,0,150,30" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+                Opacity="0.75" Content="&lt;" Margin="0,0,150,30" HorizontalAlignment="Center" VerticalAlignment="Bottom" BorderBrush="{x:Null}"/>
         <Label x:Name="pagingInfo" HorizontalContentAlignment="Center" HorizontalAlignment="Center" 
                Height="30" Width="100" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30"/>
         <Button Height="23" HorizontalAlignment="Center" Name="btnNext" VerticalAlignment="Bottom" Width="40" 
-                Content="&gt;" Click="btnNext_Click" Opacity="0.75" Margin="150,0,0,30"/>
+                Content="&gt;" Click="btnNext_Click" Opacity="0.75" Margin="150,0,0,30" BorderBrush="{x:Null}"/>
         <Button Height="23" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="40" Name="btnLast" 
-                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;" Margin="250,0,0,30"/>
+                Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;" Margin="250,0,0,30" BorderBrush="{x:Null}"/>
 
         <Label Content="Invoice" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Grid.Column="1"/>
         <DataGrid Grid.Column="1" Margin="10,40,10,85" Name="invoice" AutoGenerateColumns="False" FontSize="14">
@@ -56,7 +56,26 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="10,1,10,1"
-            Opacity="0.75" Content="Process Invoice" Margin="80,0,0,30" Grid.Column="1"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <ComboBox Name="type" Grid.Column="1" HorizontalAlignment="Left" Margin="96,0,0,30" VerticalAlignment="Bottom" Width="91" FontSize="14" BorderBrush="{x:Null}">
+            <ComboBoxItem Content="Income"></ComboBoxItem>
+            <ComboBoxItem Content="Sales"></ComboBoxItem>
+        </ComboBox>
+        <Label Grid.Column="1" Content="Invoice type:" HorizontalAlignment="Left" Margin="10,0,0,30" VerticalAlignment="Bottom"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ProcessInvoice"
+            Opacity="0.75" Content="Process Invoice" Margin="221,0,0,30" Grid.Column="1" FontSize="14" Background="#FF2ABB61" Foreground="White" BorderBrush="{x:Null}" Height="26"/>
+        <Button  HorizontalAlignment="Left" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ClearInvoice"
+            Opacity="0.75" Content="Clear Invoice" Margin="381,0,0,30" Grid.Column="1" FontSize="14" Background="#FFD2DCD6" Foreground="Black" BorderBrush="{x:Null}" Height="26"/>
     </Grid>
 </Window>
