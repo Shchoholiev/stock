@@ -1,4 +1,7 @@
-﻿using Stock.Infrastructure.DataInitializer;
+﻿using Stock.Application.IServices;
+using Stock.Application.Paging;
+using Stock.Core.Entities;
+using Stock.Infrastructure.DataInitializer;
 using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
 using System;
 using System.Collections.Generic;
@@ -17,17 +20,64 @@ using System.Windows.Shapes;
 
 namespace Stock.UI
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private readonly IItemsService _itemsService;
+
+        private PageParameters _pageParameters = new ();
+
+        private PagedList<Item> _items = new();
+
+        private PagedList<Item> _invoiceItems = new();
+
+        public MainWindow(IItemsService itemsService)
         {
+            this._itemsService = itemsService;
+
             var context = new ApplicationContext();
             DbInitializer.Initialize(context);
 
             InitializeComponent();
+            new Action(async () => await this.SetPage(1))();
+        }
+
+        private async Task SetPage(int pageNumber)
+        {
+            this._pageParameters.PageNumber = pageNumber;
+            this._items = await this._itemsService.GetItemsPageAsync(this._pageParameters);
+            this.stock.ItemsSource = this._items;
+            pagingInfo.Content = $"{this._items.PageNumber} of {this._items.TotalPages}";
+        }
+
+        private async void btnFirst_Click(object sender, RoutedEventArgs e)
+        {
+            await this.SetPage(1);
+        }
+
+        private async void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
+            if (this._items.PageNumber > 1)
+            {
+                await this.SetPage(this._items.PageNumber - 1);
+            }
+        }
+
+        private async void btnNext_Click(object sender, RoutedEventArgs e)
+        {
+            if (this._items.PageNumber < this._items.TotalPages)
+            {
+                await this.SetPage(this._items.PageNumber + 1);
+            }
+        }
+
+        private async void btnLast_Click(object sender, RoutedEventArgs e)
+        {
+            await this.SetPage(this._items.TotalPages);
+        }
+
+        private void AddToInvoice(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
