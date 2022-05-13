@@ -3,6 +3,7 @@ using Stock.Application.IRepositories;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
 using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
+using System.Linq.Expressions;
 
 namespace Stock.Infrastructure.Repositories
 {
@@ -45,6 +46,19 @@ namespace Stock.Infrastructure.Repositories
         {
             var entities = await this._table
                                      .AsNoTracking()
+                                     .Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
+                                     .Take(pageParameters.PageSize)
+                                     .ToListAsync();
+            var totalCount = await this._table.CountAsync();
+
+            return new PagedList<TEntity>(entities, pageParameters, totalCount);
+        }
+
+        public async Task<PagedList<TEntity>> GetPageAsync(PageParameters pageParameters, Expression<Func<TEntity, bool>> predicate)
+        {
+            var entities = await this._table
+                                     .AsNoTracking()
+                                     .Where(predicate)
                                      .Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
                                      .Take(pageParameters.PageSize)
                                      .ToListAsync();
