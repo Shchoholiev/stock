@@ -32,6 +32,9 @@ namespace Stock.Infrastructure.Services
                 if (item.Id > 0)
                 {
                     var dbItem = await this._itemsRepository.GetOneAsync(item.Id);
+                    dbItem.Name = item.Name;
+                    dbItem.Price = item.Price;
+                    dbItem.Unit = item.Unit;
                     dbItem.Count += item.Count;
                     dbItem.LastAppeal = DateTime.Now;
                     await this._itemsRepository.UpdateAsync(dbItem);
@@ -47,6 +50,7 @@ namespace Stock.Infrastructure.Services
         public async Task<OperationDetails> ProcessSalesInvoiceAsync(IEnumerable<Item> items)
         {
             var details = new OperationDetails();
+            var checkedItems = new List<Item>();
             foreach (var item in items)
             {
                 var dbItem = await this._itemsRepository.GetOneAsync(item.Id);
@@ -61,12 +65,17 @@ namespace Stock.Infrastructure.Services
                 {
                     dbItem.Count = count;
                     dbItem.LastAppeal = DateTime.Now;
-                    await this._itemsRepository.UpdateAsync(dbItem);
+                    checkedItems.Add(dbItem);
                 }
                 else
                 {
                     details.AddError($"Can't update {dbItem.Name} because there are only {dbItem.Count} in stock.");
                 }
+            }
+
+            if (details.Succeeded)
+            {
+                await this._itemsRepository.UpdateRangeAsync(checkedItems);
             }
 
             return details;

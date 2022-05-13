@@ -10,6 +10,8 @@ namespace Stock.Application.IRepositories
 
         Task UpdateAsync(TEntity entity);
 
+        Task UpdateRangeAsync(IEnumerable<TEntity> entities);
+
         Task DeleteAsync(TEntity entity);
 
         Task<TEntity> GetOneAsync(int id);

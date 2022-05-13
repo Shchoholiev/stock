@@ -31,6 +31,12 @@ namespace Stock.Infrastructure.Repositories
             await this.SaveAsync();
         }
 
+        public async Task UpdateRangeAsync(IEnumerable<TEntity> items)
+        {
+            this._table.UpdateRange(items);
+            await this.SaveAsync();
+        }
+
         public async Task DeleteAsync(TEntity item)
         {
             this._table.Remove(item);
@@ -67,7 +73,7 @@ namespace Stock.Infrastructure.Repositories
             return new PagedList<TEntity>(entities, pageParameters, totalCount);
         }
 
-        private async Task SaveAsync()
+        public async Task SaveAsync()
         {
             await this._db.SaveChangesAsync();
         }

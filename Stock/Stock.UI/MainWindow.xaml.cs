@@ -158,8 +158,11 @@ namespace Stock.UI
                         }
                         MessageBox.Show(message, "Alert", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    this.ClearInvoice();
-                    await this.SetPage(this._items.PageNumber);
+                    else
+                    {
+                        this.ClearInvoice();
+                        await this.SetPage(this._items.PageNumber);
+                    }
                     break;
 
                 default:
