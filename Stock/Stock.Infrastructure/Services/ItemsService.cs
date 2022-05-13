@@ -20,6 +20,11 @@ namespace Stock.Infrastructure.Services
             return await this._itemsRepository.GetPageAsync(pageParameters);
         }
 
+        public async Task<PagedList<Item>> GetItemsPageAsync(PageParameters pageParameters, string filter)
+        {
+            return await this._itemsRepository.GetPageAsync(pageParameters, i => i.Name.StartsWith(filter));
+        }
+
         public async Task ProcessIncomeInvoiceAsync(IEnumerable<Item> items)
         {
             foreach (var item in items)
