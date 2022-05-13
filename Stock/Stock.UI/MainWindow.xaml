@@ -3,8 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Stock.UI"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf" x:Class="Stock.UI.MainWindow"
+        xmlns:local="clr-namespace:Stock.UI" x:Class="Stock.UI.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="657" Width="1168">
     <Grid Background="#FFFAFAFA">
@@ -13,7 +12,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Label Content="Stock" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" FontSize="20" FontWeight="Bold" Foreground="#FFB2B2B2"/>
-        <DataGrid Margin="10,40,10,72" x:Name="stock" AutoGenerateColumns="False" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Foreground="#FF2F2F2F">
+        <DataGrid Margin="10,40,10,101" x:Name="stock" AutoGenerateColumns="False" FontSize="14" IsReadOnly="True" BorderBrush="{x:Null}" Foreground="#FF2F2F2F">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
@@ -49,7 +48,7 @@
                 Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;" Margin="439,0,0,21" BorderBrush="#00000000" Foreground="#FFB2B2B2" Background="#FFECECEC"/>
 
         <Label Content="Invoice" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Grid.Column="1" Foreground="#FFB2B2B2"/>
-        <DataGrid Grid.Column="1" Margin="10,40,10,72" Name="invoice" AutoGenerateColumns="False" FontSize="14" BorderBrush="{x:Null}">
+        <DataGrid Grid.Column="1" Margin="10,40,10,65" Name="invoice" AutoGenerateColumns="False" FontSize="14" BorderBrush="{x:Null}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Unit" Binding="{Binding Unit}"/>
@@ -86,5 +85,19 @@
         <Label Grid.Column="1" Content="Invoice type:" HorizontalAlignment="Left" Margin="10,0,0,21" VerticalAlignment="Bottom" Foreground="#FFB2B2B2"/>
         <Button  HorizontalAlignment="Right" VerticalAlignment="Bottom" Padding="15,1,15,1" Click="ClearInvoice"
             Opacity="0.75" Content="Clear Invoice" Margin="0,0,10,21" Grid.Column="1" FontSize="14" Background="#FFECECEC" Foreground="#FFB2B2B2" BorderBrush="{x:Null}" Height="26"/>
+        <Label HorizontalContentAlignment="Center" HorizontalAlignment="Left" Content="Search"
+            Height="30" Width="54" VerticalContentAlignment="Center" VerticalAlignment="Bottom" Margin="47,0,0,58" Foreground="#FFB2B2B2" FontSize="14"/>
+        <TextBox x:Name="filter" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="379" RenderTransformOrigin="0.5,0.5" FontSize="14" Margin="0,0,0,61">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.12"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Button Height="23" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="72" x:Name="btnSearch" 
+            Click="btnFirst_Click" Opacity="0.75" Content="Search" Margin="556,0,0,61" BorderBrush="#00000000" Foreground="#FFB2B2B2" Background="#FFECECEC"/>
     </Grid>
 </Window>

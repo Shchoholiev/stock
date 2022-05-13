@@ -41,16 +41,38 @@ namespace Stock.UI
             pagingInfo.Content = $"{this._items.PageNumber} of {this._items.TotalPages}";
         }
 
+        private async Task Search(int pageNumber)
+        {
+            this._pageParameters.PageNumber = pageNumber;
+            this._items = await this._itemsService.GetItemsPageAsync(this._pageParameters, filter.Text);
+            this.stock.ItemsSource = this._items;
+            pagingInfo.Content = $"{this._items.PageNumber} of {this._items.TotalPages}";
+        }
+
         private async void btnFirst_Click(object sender, RoutedEventArgs e)
         {
-            await this.SetPage(1);
+            if (string.IsNullOrEmpty(filter.Text))
+            {
+                await this.SetPage(1);
+            }
+            else
+            {
+                await this.Search(1);
+            }
         }
 
         private async void btnPrev_Click(object sender, RoutedEventArgs e)
         {
             if (this._items.PageNumber > 1)
             {
-                await this.SetPage(this._items.PageNumber - 1);
+                if (string.IsNullOrEmpty(filter.Text))
+                {
+                    await this.SetPage(this._items.PageNumber - 1);
+                }
+                else
+                {
+                    await this.Search(this._items.PageNumber - 1);
+                }
             }
         }
 
@@ -58,13 +80,27 @@ namespace Stock.UI
         {
             if (this._items.PageNumber < this._items.TotalPages)
             {
-                await this.SetPage(this._items.PageNumber + 1);
+                if (string.IsNullOrEmpty(filter.Text))
+                {
+                    await this.SetPage(this._items.PageNumber + 1);
+                }
+                else
+                {
+                    await this.Search(this._items.PageNumber + 1);
+                }
             }
         }
 
         private async void btnLast_Click(object sender, RoutedEventArgs e)
         {
-            await this.SetPage(this._items.TotalPages);
+            if (string.IsNullOrEmpty(filter.Text))
+            {
+                await this.SetPage(this._items.TotalPages);
+            }
+            else
+            {
+                await this.Search(this._items.TotalPages);
+            }
         }
 
         private void AddToInvoice(object sender, RoutedEventArgs e)
