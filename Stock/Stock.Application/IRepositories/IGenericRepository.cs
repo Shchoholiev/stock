@@ -1,5 +1,6 @@
 ﻿using Stock.Application.Paging;
 using Stock.Core.Entities;
+using System.Linq.Expressions;
 
 namespace Stock.Application.IRepositories
 {
@@ -14,5 +15,8 @@ namespace Stock.Application.IRepositories
         Task<TEntity> GetOneAsync(int id);
 
         Task<PagedList<TEntity>> GetPageAsync(PageParameters pageParameters);
+
+        Task<PagedList<TEntity>> GetPageAsync(PageParameters pageParameters, 
+                                              Expression<Func<TEntity, bool>> predicate);
     }
 }

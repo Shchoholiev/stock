@@ -8,6 +8,8 @@ namespace Stock.Application.IServices
     {
         Task<PagedList<Item>> GetItemsPageAsync(PageParameters pageParameters);
 
+        Task<PagedList<Item>> GetItemsPageAsync(PageParameters pageParameters, string filter);
+
         Task ProcessIncomeInvoiceAsync(IEnumerable<Item> items);
 
         Task<OperationDetails> ProcessSalesInvoiceAsync(IEnumerable<Item> items);
