@@ -1,9 +1,11 @@
-﻿using Stock.Application.IServices;
+﻿using Microsoft.Win32;
+using Stock.Application.IServices;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
 using Stock.Infrastructure.DataInitializer;
 using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -25,8 +27,8 @@ namespace Stock.UI
         {
             this._itemsService = itemsService;
 
-            var context = new ApplicationContext();
-            DbInitializer.Initialize(context);
+            //var context = new ApplicationContext();
+            //DbInitializer.Initialize(context);
 
             InitializeComponent();
             new Action(async () => await this.SetPage(1))();
@@ -168,6 +170,20 @@ namespace Stock.UI
                 default:
                     MessageBox.Show("Choose invoice type!", "Alert", MessageBoxButton.OK, MessageBoxImage.Error);
                     break;
+            }
+        }
+
+        private void GeneratePDF(object sender, RoutedEventArgs e)
+        {
+            if (this._invoiceItems.Count > 0)
+            {
+                var saveDialog = new SaveFileDialog();
+                saveDialog.Filter = "PDF (*.pdf)|*.pdf";
+                if (saveDialog.ShowDialog() == true)
+                {
+                    var path = Path.GetFullPath(saveDialog.FileName);
+                    this._itemsService.GenerateInvoicePDF(this._invoiceItems, path);
+                }
             }
         }
 
