@@ -3,6 +3,10 @@ using Stock.Application.IRepositories;
 using Stock.Application.IServices;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
+using Syncfusion.Drawing;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Pdf.Grid;
 
 namespace Stock.Infrastructure.Services
 {
@@ -79,6 +83,26 @@ namespace Stock.Infrastructure.Services
             }
 
             return details;
+        }
+
+        public void GenerateInvoicePDF(IEnumerable<Item> items)
+        {
+            var invoice = new PdfDocument();
+            var page = invoice.Pages.Add();
+
+            var font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+            var graphics = page.Graphics;
+            graphics.DrawString("Invoice", font, PdfBrushes.Black, new PointF(220, 23));
+            
+            var grid = new PdfGrid();
+            grid.Style.Font = new PdfStandardFont(PdfFontFamily.Helvetica, 14);
+            grid.DataSource = items;
+            grid.Draw(page, new PointF(10, 60));
+
+            using (var fs = File.Create("../invoice.pdf"))
+            {
+                invoice.Save(fs);
+            }
         }
     }
 }
