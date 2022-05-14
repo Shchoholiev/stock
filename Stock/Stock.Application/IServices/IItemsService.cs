@@ -13,5 +13,7 @@ namespace Stock.Application.IServices
         Task ProcessIncomeInvoiceAsync(IEnumerable<Item> items);
 
         Task<OperationDetails> ProcessSalesInvoiceAsync(IEnumerable<Item> items);
+
+        void GenerateInvoicePDF(IEnumerable<Item> items, string path);
     }
 }

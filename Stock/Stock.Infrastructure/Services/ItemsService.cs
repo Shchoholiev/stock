@@ -3,12 +3,19 @@ using Stock.Application.IRepositories;
 using Stock.Application.IServices;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
+using Stock.Infrastructure.Mapping;
+using Syncfusion.Drawing;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Pdf.Grid;
 
 namespace Stock.Infrastructure.Services
 {
     public class ItemsService : IItemsService
     {
         private readonly IGenericRepository<Item> _itemsRepository;
+
+        private readonly Mapper _mapper = new();
 
         public ItemsService(IGenericRepository<Item> itemsRepository)
         {
@@ -79,6 +86,30 @@ namespace Stock.Infrastructure.Services
             }
 
             return details;
+        }
+
+        public void GenerateInvoicePDF(IEnumerable<Item> items, string path)
+        {
+            var invoice = new PdfDocument();
+            var page = invoice.Pages.Add();
+
+            var font = new PdfStandardFont(PdfFontFamily.Helvetica, 20);
+            var graphics = page.Graphics;
+            graphics.DrawString("Invoice", font, PdfBrushes.Black, new PointF(220, 23));
+            var total = items.Sum(i => i.Price * i.Count);
+            var formattedTotal = String.Format("{0:0.00}", total);
+            graphics.DrawString($"Total: {formattedTotal}", font, PdfBrushes.Black, new PointF(350, 700));
+            
+            var grid = new PdfGrid();
+            grid.Style.Font = new PdfStandardFont(PdfFontFamily.Helvetica, 14);
+            var dtos = this._mapper.Map(items);
+            grid.DataSource = dtos;
+            grid.Draw(page, new PointF(0, 60));
+
+            using (var fs = File.Create(path))
+            {
+                invoice.Save(fs);
+            }
         }
     }
 }
