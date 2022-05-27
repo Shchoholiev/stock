@@ -2,7 +2,7 @@
 using Stock.Application.IRepositories;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
-using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
+using Stock.Infrastructure.EF;
 using System.Linq.Expressions;
 
 namespace Stock.Infrastructure.Repositories

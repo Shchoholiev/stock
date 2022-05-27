@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Stock.Application.IRepositories;
 using Stock.Application.IServices;
-using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
+using Stock.Infrastructure.EF;
 using Stock.Infrastructure.Repositories;
 using Stock.Infrastructure.Services;
 
