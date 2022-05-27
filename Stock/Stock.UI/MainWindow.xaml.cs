@@ -3,7 +3,7 @@ using Stock.Application.IServices;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
 using Stock.Infrastructure.DataInitializer;
-using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
+using Stock.Infrastructure.EF;
 using System;
 using System.IO;
 using System.Linq;
