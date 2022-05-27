@@ -1,5 +1,5 @@
 ﻿using Stock.Core.Entities;
-using Stock.Infrastructure.EF.EducationalPortal.Infrastructure.EF;
+using Stock.Infrastructure.EF;
 
 namespace Stock.Infrastructure.DataInitializer
 {
