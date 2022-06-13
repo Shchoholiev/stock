@@ -1,9 +1,9 @@
 ﻿using Stock.Application.Descriptions;
 using Stock.Application.IRepositories;
 using Stock.Application.IServices;
+using Stock.Application.Mapping;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
-using Stock.Infrastructure.Mapping;
 using Syncfusion.Drawing;
 using Syncfusion.Pdf;
 using Syncfusion.Pdf.Graphics;

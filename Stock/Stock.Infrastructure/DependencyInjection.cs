@@ -12,7 +12,6 @@ namespace Stock.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
-            //
             var connectionString = @"server=(LocalDb)\MSSQLLocalDB;database=Stock;integrated security=True;
                     MultipleActiveResultSets=True;App=EntityFramework;";
 

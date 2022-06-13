@@ -2,8 +2,6 @@
 using Stock.Application.IServices;
 using Stock.Application.Paging;
 using Stock.Core.Entities;
-using Stock.Infrastructure.DataInitializer;
-using Stock.Infrastructure.EF;
 using System;
 using System.IO;
 using System.Linq;
@@ -17,8 +15,6 @@ namespace Stock.UI
     {
         private readonly IItemsService _itemsService;
 
-        private PageParameters _pageParameters = new ();
-
         private PagedList<Item> _items = new();
 
         private PagedList<Item> _invoiceItems = new();
@@ -26,10 +22,6 @@ namespace Stock.UI
         public MainWindow(IItemsService itemsService)
         {
             this._itemsService = itemsService;
-
-            //var context = new ApplicationContext();
-            //DbInitializer.Initialize(context);
-
             InitializeComponent();
             new Action(async () => await this.SetPage(1))();
             this.invoice.ItemsSource = this._invoiceItems;
@@ -37,16 +29,18 @@ namespace Stock.UI
 
         private async Task SetPage(int pageNumber)
         {
-            this._pageParameters.PageNumber = pageNumber;
-            this._items = await this._itemsService.GetItemsPageAsync(this._pageParameters);
+            var pageParameters = new PageParameters();
+            pageParameters.PageNumber = pageNumber;
+            this._items = await this._itemsService.GetItemsPageAsync(pageParameters);
             this.stock.ItemsSource = this._items;
             pagingInfo.Content = $"{this._items.PageNumber} of {this._items.TotalPages}";
         }
 
         private async Task Search(int pageNumber)
         {
-            this._pageParameters.PageNumber = pageNumber;
-            this._items = await this._itemsService.GetItemsPageAsync(this._pageParameters, filter.Text);
+            var pageParameters = new PageParameters();
+            pageParameters.PageNumber = pageNumber;
+            this._items = await this._itemsService.GetItemsPageAsync(pageParameters, filter.Text);
             this.stock.ItemsSource = this._items;
             pagingInfo.Content = $"{this._items.PageNumber} of {this._items.TotalPages}";
         }

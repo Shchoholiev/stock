@@ -1,10 +1,18 @@
-﻿using Stock.Core.Entities;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Stock.Core.Entities;
 using Stock.Infrastructure.EF;
 
 namespace Stock.Infrastructure.DataInitializer
 {
     public static class DbInitializer
     {
+        public static void InitializeDb(IServiceProvider serviceProvider)
+        {
+            var scope = serviceProvider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+            Initialize(context);
+        }
+
         public static void Initialize(ApplicationContext context)
         {
             context.Database.EnsureDeleted();

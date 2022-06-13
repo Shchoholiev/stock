@@ -2,7 +2,7 @@
 using Stock.Application.DTOs;
 using Stock.Core.Entities;
 
-namespace Stock.Infrastructure.Mapping
+namespace Stock.Application.Mapping
 {
     public class Mapper
     {

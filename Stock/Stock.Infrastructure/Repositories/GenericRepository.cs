@@ -13,9 +13,9 @@ namespace Stock.Infrastructure.Repositories
 
         private readonly DbSet<TEntity> _table;
 
-        public GenericRepository()
+        public GenericRepository(ApplicationContext context)
         {
-            this._db = new ApplicationContext();
+            this._db = context;
             this._table = _db.Set<TEntity>();
         }
 
