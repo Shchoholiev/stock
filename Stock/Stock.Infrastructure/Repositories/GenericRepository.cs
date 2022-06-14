@@ -68,7 +68,7 @@ namespace Stock.Infrastructure.Repositories
                                      .Skip((pageParameters.PageNumber - 1) * pageParameters.PageSize)
                                      .Take(pageParameters.PageSize)
                                      .ToListAsync();
-            var totalCount = await this._table.CountAsync();
+            var totalCount = await this._table.CountAsync(predicate);
 
             return new PagedList<TEntity>(entities, pageParameters, totalCount);
         }
