@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Stock.Application\Stock.Application.csproj" />
+    <ProjectReference Include="..\Stock.Core\Stock.Core.csproj" />
+    <ProjectReference Include="..\Stock.Infrastructure\Stock.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
